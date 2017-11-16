@@ -1,0 +1,12 @@
+import(ICS)
+import(ICSOutlier)
+import(DT)
+importFrom(simsalapar,tryCatch.W.E)
+importFrom(shiny,runApp)
+importFrom(ICSNP, HR.Mest)
+importFrom(utils, write.csv)
+importFrom(rrcov, CovMcd)
+
+export(ICSShiny, TM, MCD, HRMEST)
+S3method(print,icsshiny)
+
