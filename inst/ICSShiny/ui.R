@@ -39,8 +39,8 @@ fluidPage(
                                       {
                                          selectInput("scatterChoice1", label = "", 
                                                      choices = list("MeanCov", "Mean3Cov4", "MCD", "tM", "HRMEST", 
-                                                                    "Personnalized"),
-                                                     selected = "Personnalized")
+                                                                    "Personalized"),
+                                                     selected = "Personalized")
                                       }
                                     
                               ),
@@ -56,14 +56,14 @@ fluidPage(
                                       {
                                          selectInput("scatterChoice2", label = "", 
                                                      choices = list("MeanCov", "Mean3Cov4", "MCD", "tM", "HRMEST", 
-                                                                    "Personnalized"),
-                                                     selected = "Personnalized")
+                                                                    "Personalized"),
+                                                     selected = "Personalized")
                                        }
                                      
                                      )),
                             conditionalPanel(
                               condition = 'input.scatterChoice1 == input.scatterChoice2 &&
-                              input.scatterChoice1 != "Personnalized"',
+                              input.scatterChoice1 != "Personalized"',
                               p("*Please select different scatter matrices",
                                 style = "font-family: 'times'; font-si16pt; color : red")
                             ),

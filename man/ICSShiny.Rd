@@ -13,7 +13,9 @@ It is inspired from the \code{Factoshiny} application of the \code{FactoMineR} p
 
 \usage{
 ICSShiny(x, S1 = MeanCov, S2 = Mean3Cov4, 
-         S1args = list(), S2args = list(), seed = NULL)
+         S1args = list(), S2args = list(), seed = NULL, 
+         ncores = NULL, iseed = NULL, 
+         pkg = "ICSOutlier")
 }
 
 %- maybe also 'usage' for other objects documented here.
@@ -24,6 +26,10 @@ ICSShiny(x, S1 = MeanCov, S2 = Mean3Cov4,
   \item{S1args}{list with optional additional arguments when calling function S1.}
   \item{S2args}{list with optional additional arguments when calling function S2.}
   \item{seed}{to fix a seed when needed in order to fix the thresholds. Default is \code{NULL}. See details for more information.}
+  \item{ncores}{number of cores to be used in \code{\link{dist.simu.test}} and \code{\link{comp.simu.test}}. If \code{NULL} or 1, no parallel computing is used. Otherwise \link[parallel]{makeCluster} with \code{type = "PSOCK"} is used.}
+  \item{iseed}{If parallel computation is used the seed passed on to \code{\link[parallel]{clusterSetRNGStream}}. Default is NULL which means no fixed seed is used.}
+  \item{pkg}{When using parallel computing, a character vector listing all the packages which need to be loaded on the different cores via \code{\link{require}}. Must be at least "ICSOutlier" and must contain the packages needed to compute the scatter matrices.}
+
 }
 
 \value{
@@ -80,7 +86,7 @@ The number of components to keep can also be decided from Monte Carlo simulation
 \references{
 \cite{Nordhausen, K., Oja, H. and Tyler, D.E. (2008), Tools for exploring multivariate data: The package ICS, \emph{Journal of Statistical Software}, \bold{28}, 1--31. <doi:10.18637/jss.v028.i06>.}  
 
- \cite{Archimbaud, A., Nordhausen, K. and Ruiz-Gazen, A. (2016), Multivariate Outlier Detection With ICS, <https://arxiv.org/pdf/1612.06118.pdf>.}   
+ \cite{Archimbaud, A., Nordhausen, K. and Ruiz-Gazen, A. (2016), ICS for multivariate outlier detection with application to quality control, <https://arxiv.org/pdf/1612.06118.pdf>.}   
 }
 
 \author{
@@ -103,6 +109,9 @@ ICSShiny(res.shiny)
 
 # ICS with ICSShiny and different parameters
 res.shiny <- ICSShiny(iris, S1 = MCD, S1args=list(alpha=0.7), seed = 7587)
+
+# ICS with ICSShiny with parallelization of computations and seed
+res.shiny <- ICSShiny(iris, iseed = 1234, ncores = 2)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

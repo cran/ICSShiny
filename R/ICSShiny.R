@@ -1,4 +1,5 @@
-ICSShiny <- function(x, S1= MeanCov, S2=Mean3Cov4, S1args=list(), S2args=list(), seed=NULL){
+ICSShiny <- function(x, S1= MeanCov, S2=Mean3Cov4, S1args=list(), S2args=list(), seed=NULL,
+                     ncores = NULL, iseed = NULL, pkg = "ICSOutlier"){
     
     #   Assign the parameters of the function to the global environment 
     G <- .GlobalEnv
@@ -11,6 +12,9 @@ ICSShiny <- function(x, S1= MeanCov, S2=Mean3Cov4, S1args=list(), S2args=list(),
     assign("S1args", S1args, envir=G)
     assign("S2args", S2args, envir=G)
     assign("seed", seed, envir=G)
+    assign("iseed", iseed, envir=G)
+    assign("ncores", ncores, envir=G)
+    assign("pkg", pkg, envir=G)
     S1name <- deparse(substitute(S1))
     S2name <- deparse(substitute(S2))
     assign("S1name", S1name, envir=G)

@@ -144,7 +144,7 @@ function(input, output, session) {
       req(input$scatterChoice1)
       req(input$scatterChoice2)
       validate(
-        need(input$scatterChoice1!=input$scatterChoice2 || input$scatterChoice1=="Personnalized", "error" )
+        need(input$scatterChoice1!=input$scatterChoice2 || input$scatterChoice1=="Personalized", "error" )
       )
       
       req(reacvals$alpha)
@@ -157,7 +157,7 @@ function(input, output, session) {
       )
       req(input$maxiter)
       
-      if(input$scatterChoice1 == "Personnalized")
+      if(input$scatterChoice1 == "Personalized")
       {
         datvals$S1<-datvals$S1.init
       }
@@ -178,7 +178,7 @@ function(input, output, session) {
       {
         datvals$S1args<-list(maxiter = input$maxiter)
       }
-      else if(input$scatterChoice1 == "Personnalized")
+      else if(input$scatterChoice1 == "Personalized")
       {
         datvals$S1args<-datvals$S1args.init
       }
@@ -187,7 +187,7 @@ function(input, output, session) {
         datvals$S1args<-list()
       }
       
-      if(input$scatterChoice2 == "Personnalized")
+      if(input$scatterChoice2 == "Personalized")
       {
         datvals$S2<-datvals$S2.init
       }
@@ -208,7 +208,7 @@ function(input, output, session) {
       {
         datvals$S2args<-list(maxiter = input$maxiter)
       }
-      else if(input$scatterChoice2 == "Personnalized")
+      else if(input$scatterChoice2 == "Personalized")
       {
         datvals$S2args<-datvals$S2args.init
       }
@@ -319,8 +319,8 @@ function(input, output, session) {
     else{
       updateSelectInput(session, "scatterChoice1", label = "", 
                   choices = list("MeanCov", "Mean3Cov4", "MCD", "tM", "HRMEST", 
-                                 "Personnalized"),
-                  selected = "Personnalized")
+                                 "Personalized"),
+                  selected = "Personalized")
     }
     
     if(datvals$S1name.init != datvals$S2name.init  & datvals$S2name.init %in% c("MeanCov", "Mean3Cov4", "MCD", "tM", "HRMEST"))
@@ -333,8 +333,8 @@ function(input, output, session) {
     {
       updateSelectInput(session, "scatterChoice2", label = "", 
                         choices = list("MeanCov", "Mean3Cov4", "MCD", "tM", "HRMEST", 
-                                       "Personnalized"),
-                        selected = "Personnalized")
+                                       "Personalized"),
+                        selected = "Personalized")
     }
     
     updateCheckboxInput(session, "parametersMCD", label="Parametrize MCD", value= FALSE)
@@ -695,7 +695,8 @@ function(input, output, session) {
   #We print the result according to a boolean value, because, if not we would have an error when it has yet to be
   #computed. Morever, if not, the result would stay even when the data.ics is modified
   output$compSimuResults <- renderPrint({
-    req( simucompvals$bool)
+    req(simucompvals$bool)
+    req(datvals$data.ics)
     validate(
       need(input$levelCompSimu > 0 && input$levelCompSimu <= 1, 
            "The level of the test must be included in ]0 ; 1]")
@@ -705,12 +706,21 @@ function(input, output, session) {
       need(input$nbIterationCompSimu > 0 && is.integer(input$nbIterationCompSimu), 
            "The number of iteration must be an integer strickly greater than 0")
     )
+    validate(
+      need(datvals$data.ics@S1name != "Personalized" && datvals$data.ics@S2name != "Personalized" , 
+           "The simulations are available only for S1 and S2 functions from the ICSShiny package, 
+           not for Personalized functions.")
+      )
    
     if (simucompvals$bool==1)
     {
       writeLines(simucompvals$result, sep="")
     }
-    else
+    else if (datvals$data.ics@S1name == "Personalized" | datvals$data.ics@S2name == "Personalized")
+    {
+      writeLines("The simulations are available only for S1 and S2 functions from the ICSShiny package, 
+           not for Personalized functions.")
+    }else
     {
       writeLines("Click on the 'Launch the test' button")
     }
@@ -764,6 +774,13 @@ function(input, output, session) {
       need(input$nbIterationCompSimu > 0 && is.integer(input$nbIterationCompSimu), 
            "The number of iteration must be an integer strickly greater than 0")
     )
+    validate(
+      need(datvals$data.ics@S1name != "Personalized" && datvals$data.ics@S2name != "Personalized" , 
+           "The simulations are available only for S1 and S2 functions from the ICSShiny package, 
+           not for Personalized functions.")
+    )
+    
+    
     simucompvals$bool<<-1
     simucompvals$level<-input$levelCompSimu
     simucompvals$iteration<-input$nbIterationCompSimu
@@ -776,10 +793,10 @@ function(input, output, session) {
     
     set.seed(seed)
     SimuBeg<<-ifelse(is.null(SimuBeg) | input$launchCompSimu > 0, max(comp.simu.test(datvals$data.ics, m=input$nbIterationCompSimu, type = "smallprop", 
-                                level = input$levelCompSimu, adjust = TRUE)$index),  SimuBeg)
+                                level = input$levelCompSimu, adjust = TRUE, ncores = ncores, iseed = iseed, pkg = pkg)$index),  SimuBeg)
     set.seed(seed)
     SimuEnd<<-ifelse(is.null(SimuEnd) | input$launchCompSimu > 0, max(comp.simu.test(data.ics.rev, m=input$nbIterationCompSimu, type = "smallprop", 
-                                level = input$levelCompSimu, adjust = TRUE)$index), SimuEnd)
+                                level = input$levelCompSimu, adjust = TRUE, ncores = ncores, iseed = iseed, pkg = pkg)$index), SimuEnd)
     
     simucompvals$indexSimuComp<-append(0:SimuBeg, (ncol(datvals$data)+1-SimuEnd):(ncol(datvals$data)+1))
     simucompvals$indexSimuComp<-simucompvals$indexSimuComp[simucompvals$indexSimuComp>0]
@@ -1293,10 +1310,17 @@ function(input, output, session) {
            "The number of iteration must be an integer strickly greater than 0")
     )
     
+    validate(
+      need(datvals$data.ics@S1name != "Personalized" && datvals$data.ics@S2name != "Personalized" , 
+           "The simulations are available only for S1 and S2 functions from the ICSShiny package, 
+           not for Personalized functions.")
+    )
+  
     set.seed(seed)
     outliervals$cutOff = ifelse((cutOff.out==0 | nbIterationCutOff!=input$nbIterationCutOff | levelCutOff!= input$levelCutOff), 
                                    dist.simu.test(datvals$data.ics, index=outliervals$index,
-                                        m=input$nbIterationCutOff, level=input$levelCutOff),cutOff.out)
+                                        m=input$nbIterationCutOff, level=input$levelCutOff,
+                                        ncores = ncores, iseed = iseed, pkg = pkg),cutOff.out)
     outliervals$bool <- TRUE
     outliervals$cutOffMode<-1
   })
@@ -2119,6 +2143,9 @@ function(input, output, session) {
     res.ics$S1args<-S1args
     res.ics$S2args<-S2args
     res.ics$seed<-seed 
+    res.ics$ncores <- ncores
+    res.ics$iseed <- iseed
+    res.ics$pkg <- pkg
     res.ics$n <- nrow(X)
     #res.ics$data.ics.dist<-outliervals$dist
     res.ics$data.ics.comp<-outliervals$index

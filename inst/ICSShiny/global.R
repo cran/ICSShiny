@@ -12,6 +12,9 @@ if(inherits(x, "data.frame")){
   S2name <- S2name
   data.ics<-ics2(X[,var.names], S1, S2, S1args, S2args)
   seed<-seed 
+  ncores <- ncores
+  iseed <- iseed
+  pkg <- pkg
   n <- nrow(X)
   #data.ics.dist<-rep(0, n)
   data.ics.comp<- 1:ncol(X[,var.names])
@@ -88,6 +91,9 @@ if(inherits(x, "icsshiny")){
   S1name <- x$S1name
   S2name <- x$S2name
   seed <- x$seed
+  ncores <- x$ncores
+  iseed <- x$iseed
+  pkg <- x$pkg
   n <- x$n
   
   

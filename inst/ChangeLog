@@ -1,5 +1,14 @@
 LOG of the CHANGES in the package ICSShiny
 
+Version 0.5:
+* Modifying function ICSShiny to allow parallel computations when using dist.simu.test and comp.simu.test functions. Three arguments
+are added: iseed, ncores and pkg.
+* Fixing a bug in the package to avoid a crash of the application in case the user try to do simulations with a personalized function.
+Now there is a message.
+* Correcting some typos.
+* Updating some references.
+
+
 Version 0.4:
 * First version submitted to CRAN
 
