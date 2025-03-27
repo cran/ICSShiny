@@ -1,13 +1,13 @@
-662a463637d3d90d694ca60111278dd4 *DESCRIPTION
+8bc0faf46204996859d5c614aeebdf2c *DESCRIPTION
 3ef38041feeae917d0526e4b2c6def73 *NAMESPACE
 87f9b78e0ba98c943f41f7bb450060e6 *R/ICSShiny.R
 cae197fbf0fe2619b6d123230379165e *R/internal.R
-785c4b27d19238ff8a2a19363a15f805 *inst/ChangeLog
+7cf9839e96efa3f2a2155be293e3e8d1 *inst/ChangeLog
 6bd142cf79e8c42e56ac2fe0497e5cfb *inst/ICSShiny/global.R
 aa39f9fb4f14c47070b222e58d53fddb *inst/ICSShiny/server.R
 299b7f78c1c6ba2b212ae6e02ecb3994 *inst/ICSShiny/ui.R
 cd0e43ca1aeec60e5d40d71dc9d222d7 *man/HRMest.Rd
-4fc7f57b5d71eea9d122a601d9d66dcb *man/ICSShiny.Rd
+1ce52d97d708664fbea4f69c9ea693e5 *man/ICSShiny.Rd
 00c0973f91904b3b1e3e4a77aff39469 *man/MCD.Rd
 9156ed8b73107ba7091bd7c140cbe867 *man/TM.Rd
 664cca48729e338a081cb41092424229 *man/print.ICSshiny.Rd

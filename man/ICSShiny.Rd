@@ -7,7 +7,7 @@ Invariant Coordinate Selection With a Shiny App
 
 \description{
 Performs ICS via a shiny app where the user can change the scatter matrices, explore the output and download graphs and components. 
-Also the ICS outlier detection framework, from the \code{\link{ICSOutlier}} package is available.
+Also the ICS outlier detection framework, from the \code{\link[ICSOutlier]{ICSOutlier}} package is available.
 It is inspired from the \code{Factoshiny} application of the \code{FactoMineR} package.
 }
 
@@ -26,7 +26,7 @@ ICSShiny(x, S1 = MeanCov, S2 = Mean3Cov4,
   \item{S1args}{list with optional additional arguments when calling function S1.}
   \item{S2args}{list with optional additional arguments when calling function S2.}
   \item{seed}{to fix a seed when needed in order to fix the thresholds. Default is \code{NULL}. See details for more information.}
-  \item{ncores}{number of cores to be used in \code{\link{dist.simu.test}} and \code{\link{comp.simu.test}}. If \code{NULL} or 1, no parallel computing is used. Otherwise \link[parallel]{makeCluster} with \code{type = "PSOCK"} is used.}
+  \item{ncores}{number of cores to be used in \code{\link[ICSOutlier]{dist.simu.test}} and \code{\link[ICSOutlier]{comp.simu.test}}. If \code{NULL} or 1, no parallel computing is used. Otherwise \link[parallel]{makeCluster} with \code{type = "PSOCK"} is used.}
   \item{iseed}{If parallel computation is used the seed passed on to \code{\link[parallel]{clusterSetRNGStream}}. Default is NULL which means no fixed seed is used.}
   \item{pkg}{When using parallel computing, a character vector listing all the packages which need to be loaded on the different cores via \code{\link{require}}. Must be at least "ICSOutlier" and must contain the packages needed to compute the scatter matrices.}
 
@@ -85,8 +85,7 @@ The number of components to keep can also be decided from Monte Carlo simulation
 
 \references{
 \cite{Nordhausen, K., Oja, H. and Tyler, D.E. (2008), Tools for exploring multivariate data: The package ICS, \emph{Journal of Statistical Software}, \bold{28}, 1--31. <doi:10.18637/jss.v028.i06>.}  
-
- \cite{Archimbaud, A., Nordhausen, K. and Ruiz-Gazen, A. (2016), ICS for multivariate outlier detection with application to quality control, <https://arxiv.org/pdf/1612.06118.pdf>.}   
+\cite{Archimbaud, A., Nordhausen, K. and Ruiz-Gazen, A. (2018), ICS for multivariate outlier detection with application to quality control. Computational Statistics & Data Analysis, 128:184–199.  <doi:10.1016/j.csda.2018.06.011>.}   
 }
 
 \author{
@@ -94,7 +93,7 @@ The number of components to keep can also be decided from Monte Carlo simulation
 }
 
 \seealso{ \code{\link[ICS]{ics2}},\code{\link[ICSOutlier]{ics.outlier}},\cr
-\href{http://shiny.rstudio.com}{shiny website}
+\href{https://shiny.posit.co/}{shiny website}
 }
 
 \examples{
